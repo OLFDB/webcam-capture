@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -21,6 +22,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * This is very simple class which allows video from webcam to be exposed as MJPEG stream on a given
+ * port. The mapping between webcam and port is one-to-one, which means that a single port need to
+ * be allocated for every webcam you want to stream from.
+ *
+ * @author Bartoisz Firyn (sarxos)
+ */
 public class WebcamStreamer implements ThreadFactory, WebcamListener {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebcamStreamer.class);
@@ -33,12 +41,9 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 
 		@Override
 		public void run() {
-			try {
-				ServerSocket server = new ServerSocket(port);
+			try (ServerSocket server = new ServerSocket(port, 50, InetAddress.getByName("0.0.0.0"))) {
 				while (started.get()) {
-					Socket socket = server.accept();
-					LOG.info("New connection from {}", socket.getRemoteSocketAddress());
-					executor.execute(new Connection(socket));
+					executor.execute(new Connection(server.accept()));
 				}
 			} catch (Exception e) {
 				LOG.error("Cannot accept socket connection", e);
@@ -57,9 +62,11 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 		@Override
 		public void run() {
 
-			BufferedReader br = null;
-			BufferedOutputStream bos = null;
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			LOG.info("New connection from {}", socket.getRemoteSocketAddress());
+
+			final BufferedReader br;
+			final BufferedOutputStream bos;
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 			try {
 				br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -135,9 +142,23 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 							bos.write(CRLF.getBytes());
 							bos.flush();
 						} catch (SocketException e) {
-							LOG.error("Socket exception from " + socket.getRemoteSocketAddress(), e);
-							br.close();
-							bos.close();
+
+							if (!socket.isConnected()) {
+								LOG.debug("Connection to client has been lost");
+							}
+							if (socket.isClosed()) {
+								LOG.debug("Connection to client is closed");
+							}
+
+							try {
+								br.close();
+								bos.close();
+							} catch (SocketException se) {
+								LOG.debug("Exception when closing socket", se);
+							}
+
+							LOG.debug("Socket exception from " + socket.getRemoteSocketAddress(), e);
+
 							return;
 						}
 
@@ -169,17 +190,20 @@ public class WebcamStreamer implements ThreadFactory, WebcamListener {
 				}
 
 			} finally {
+
+				LOG.info("Closing connection from {}", socket.getRemoteSocketAddress());
+
 				for (Closeable closeable : new Closeable[] { br, bos, baos }) {
 					try {
 						closeable.close();
 					} catch (IOException e) {
-						LOG.error("Cannot close socket", e);
+						LOG.debug("Cannot close socket", e);
 					}
 				}
 				try {
 					socket.close();
 				} catch (IOException e) {
-					LOG.error("Cannot close socket", e);
+					LOG.debug("Cannot close socket", e);
 				}
 			}
 		}

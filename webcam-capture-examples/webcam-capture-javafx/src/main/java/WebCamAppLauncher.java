@@ -1,4 +1,7 @@
 import java.awt.image.BufferedImage;
+import java.util.concurrent.atomic.AtomicReference;
+
+import com.github.sarxos.webcam.Webcam;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,16 +23,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-import com.github.sarxos.webcam.Webcam;
-
 
 /**
- * This example demonstrates how to use Webcam Capture API in a JavaFX
- * application.
+ * This example demonstrates how to use Webcam Capture API in a JavaFX application.
  * 
  * @author Rakesh Bhatt (rakeshbhatt10)
  */
@@ -202,20 +203,23 @@ public class WebCamAppLauncher extends Application {
 			@Override
 			protected Void call() throws Exception {
 
+				final AtomicReference<WritableImage> ref = new AtomicReference<>();
+				BufferedImage img = null;
+
 				while (!stopCamera) {
 					try {
-						if ((grabbedImage = webCam.getImage()) != null) {
+						if ((img = webCam.getImage()) != null) {
+
+							ref.set(SwingFXUtils.toFXImage(img, ref.get()));
+							img.flush();
 
 							Platform.runLater(new Runnable() {
 
 								@Override
 								public void run() {
-									Image mainiamge = SwingFXUtils.toFXImage(grabbedImage, null);
-									imageProperty.set(mainiamge);
+									imageProperty.set(ref.get());
 								}
 							});
-
-							grabbedImage.flush();
 						}
 					} catch (Exception e) {
 						e.printStackTrace();

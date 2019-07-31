@@ -1,8 +1,10 @@
 package com.github.sarxos.webcam.util;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -62,5 +64,49 @@ public class ImageUtils {
 		}
 
 		return bytes;
+	}
+
+	public static BufferedImage readFromResource(String resource) {
+		InputStream is = null;
+		try {
+			return ImageIO.read(is = ImageUtils.class.getClassLoader().getResourceAsStream(resource));
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					throw new IllegalStateException(e);
+				}
+			}
+		}
+	}
+
+	public static BufferedImage createEmptyImage(final BufferedImage source) {
+		return new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
+	}
+
+	/**
+	 * Clamp a value to the range 0..255
+	 */
+	public static int clamp(int c) {
+		if (c < 0) {
+			return 0;
+		}
+		if (c > 255) {
+			return 255;
+		}
+		return c;
+	}
+
+	/**
+	 * Return image raster as bytes array.
+	 *
+	 * @param bi the {@link BufferedImage}
+	 * @return The raster data as byte array
+	 */
+	public static byte[] imageToBytes(BufferedImage bi) {
+		return ((DataBufferByte) bi.getData().getDataBuffer()).getData();
 	}
 }

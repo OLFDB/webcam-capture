@@ -1,8 +1,12 @@
 # webcam-capture-driver-gstreamer
 
 This is capture driver which gives Webcam Capture API possibility to use
-[GStreamer](http://gstreamer.freedesktop.org/documentation/gstreamer010.html)
+[GStreamer 0.10+](http://gstreamer.freedesktop.org/documentation/gstreamer010.html)
 as a middleware accessing webcam devices (build-in or USB enabled).
+
+**NOTE**: This capture driver is **only** for GStreamer 0.10+. With GStramer 1.0+ you have to use
+[webcam-capture-driver-gst1](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-gst1)
+instead!
 
 It has been designed to work with Windows and Linux **only**. To make use of it user have to 
 [download](http://code.google.com/p/ossbuild/) GStreamer application installer 
@@ -18,9 +22,9 @@ the correct one! It is **not** compatible with GStreamer 1.0 and above!
 
 ## Download
 
-The latest **development** version JAR (aka SNAPSHOT) can be downloaded [here](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.github.sarxos&a=webcam-capture-driver-gstreamer&v=0.3.10-SNAPSHOT).
+The latest **development** version JAR (aka SNAPSHOT) can be downloaded [here](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.github.sarxos&a=webcam-capture-driver-gstreamer&v=0.3.13-SNAPSHOT).
 
-The latest **stable** version ZIP bundle can be downloaded [here](http://repo.sarxos.pl/maven2/com/github/sarxos/webcam-capture-driver-gstreamer/0.3.10-RC7/webcam-capture-driver-gstreamer-0.3.10-RC7-dist.zip).
+The latest **stable** version ZIP bundle can be downloaded [here](http://repo.sarxos.pl/maven2/com/github/sarxos/webcam-capture-driver-gstreamer/0.3.12/webcam-capture-driver-gstreamer-0.3.12-dist.zip).
 
 ## Maven
 
@@ -30,7 +34,7 @@ Stable:
 <dependency>
 	<groupId>com.github.sarxos</groupId>
 	<artifactId>webcam-capture-driver-gstreamer</artifactId>
-	<version>0.3.10</version>
+	<version>0.3.12</version>
 </dependency>
 ```
 
@@ -46,7 +50,7 @@ Snapshot:
 <dependency>
     <groupId>com.github.sarxos</groupId>
     <artifactId>webcam-capture-driver-gstreamer</artifactId>
-    <version>0.3.11-SNAPSHOT</version>
+    <version>0.3.13-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -68,7 +72,7 @@ public static void main(String[] args) {
 
 ## License
 
-Copyright (C) 2012 - 2014 Bartosz Firyn
+Copyright (C) 2012 - 2017 Bartosz Firyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

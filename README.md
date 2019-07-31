@@ -1,6 +1,6 @@
 # Webcam Capture API
 
-This library allows you to use your build-in or external webcam directly from Java. It's designed to abstract commonly used camera features and support various capturing farmeworks.
+This library allows you to use your build-in or external webcam directly from Java. It's designed to abstract commonly used camera features and support various capturing frameworks.
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.sarxos/webcam-capture/badge.svg)](http://search.maven.org/#artifactdetails|com.github.sarxos|webcam-capture|0.3.10|bundle)
 [![Build Status](https://img.shields.io/travis/sarxos/webcam-capture.svg?branch=master)](http://travis-ci.org/sarxos/webcam-capture)
@@ -8,7 +8,7 @@ This library allows you to use your build-in or external webcam directly from Ja
 
 ## Rationale
 
-Assume situation when your code depends on some capturing framework, but suddenly you have to drop it and use different, maybe newer one (e.g. replace archaic JMF with newest GStreamer). By doing this you will have to rewrite significant piece of your code because these frameworks are completely differend and not compatible at all. This is where Webcam Capture API comes to save the world - it was created to remove the burden of such situations so you do not have to rewrite your code never again, but instead you can simply switch the driver class to different one.
+Assume situation when your code depends on some capturing framework, but suddenly you have to drop it and use different, maybe newer one (e.g. replace archaic JMF with newest GStreamer). By doing this you will have to rewrite significant piece of your code because these frameworks are completely different and not compatible at all. This is where Webcam Capture API comes to save the world - it was created to remove the burden of such situations so you do not have to rewrite your code never again, but instead you can simply switch the driver class to different one.
 
 ## Features
 
@@ -24,34 +24,37 @@ Assume situation when your code depends on some capturing framework, but suddenl
 * Swing component to display video feed from camera,
 * Swing component to choose camera (drop down),
 * Multiple capturing frameworks are supported:
-  * [OpenIMAJ](http://www.openimaj.org/),
-  * [LTI CIVIL](http://sourceforge.net/projects/lti-civil/),
-  * [Java Media Framework (JMF)](http://www.oracle.com/technetwork/java/javase/tech/index-jsp-140239.html),
-  * [Freedom for Media in Java (FMJ)](http://fmj-sf.net/),
-  * [OpenCV](http://opencv.org/) via [JavaCV](https://github.com/bytedeco/javacv),
-  * [VLC](http://www.videolan.org/vlc/) via [vlcj](http://www.capricasoftware.co.uk/projects/vlcj/index.html),
-  * [GStreamer](http://gstreamer.freedesktop.org/) (0.10.x only) via [gstreamer-java](https://code.google.com/p/gstreamer-java/)
-  * MJPEG IP Cameras,
+  * [OpenIMAJ][];
+  * [LTI CIVIL][LTI-CIVIL];
+  * [Java Media Framework (JMF)][JMF];
+  * [Freedom for Media in Java (FMJ)][FMJ];
+  * [OpenCV][] via [JavaCV][];
+  * [VLC][] via [vlcj][];
+  * [V4L][] via [v4l4j][V4L4j];
+  * [GStreamer][] (0.10.x only) via [gstreamer-java][gstreamerj];
+  * [FFmpeg][];
+  * MJPEG IP Cameras;
+  
 
-The latest stable version is: **```0.3.10```**
+The latest stable version is: **```0.3.12```**
 
-The latest development version is: **```0.3.11-SNAPSHOT```**
+The latest development version is: **```0.3.13-SNAPSHOT```**
 
 ## Raspberry PI
 
 _(and other ARM devices)_
 
-The lates version (0.3.10) does not work on ARM just out of the box. To make it working you need to replace version 0.6.2 of BridJ JAR by the [0.6.3-SNAPHOST](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.nativelibs4java&a=bridj&v=0.6.3-SNAPSHOT) or newer [bridj-0.7-20140918](http://maven.ecs.soton.ac.uk/content/groups/maven.openimaj.org/com/nativelibs4java/bridj/0.7-20140918/bridj-0.7-20140918.jar). Moreover, lately Jonathon Hare from OpenIMAJ team, found a problem described in [bridj #525](https://github.com/ochafik/nativelibs4java/issues/525) which causes problems on armhf architecture.
+The lates version (0.3.10) does not work on ARM just out of the box. To make it working you need to replace version 0.6.2 of BridJ JAR by the [0.6.3-SNAPSHOT](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.nativelibs4java&a=bridj&v=0.6.3-SNAPSHOT) or newer [bridj-0.7-20140918](http://maven.ecs.soton.ac.uk/content/groups/maven.openimaj.org/com/nativelibs4java/bridj/0.7-20140918/bridj-0.7-20140918.jar). Moreover, lately Jonathon Hare from OpenIMAJ team, found a problem described in [bridj #525](https://github.com/ochafik/nativelibs4java/issues/525) which causes problems on armhf architecture.
 
 ## Maven
 
-The latest stable version is [available](http://search.maven.org/#artifactdetails|com.github.sarxos|webcam-capture|0.3.10|bundle) in Maven Central:
+The latest stable version is [available](http://search.maven.org/#artifactdetails|com.github.sarxos|webcam-capture|0.3.12|bundle) in Maven Central:
 
 ```xml
 <dependency>
   <groupId>com.github.sarxos</groupId>
   <artifactId>webcam-capture</artifactId>
-  <version>0.3.10</version>
+  <version>0.3.12</version>
 </dependency>
 ```
 
@@ -67,7 +70,7 @@ Snapshot version:
 <dependency>
 	<groupId>com.github.sarxos</groupId>
 	<artifactId>webcam-capture</artifactId>
-	<version>0.3.11-SNAPSHOT</version>
+	<version>0.3.13-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -75,13 +78,13 @@ Snapshot version:
 
 The newest stable version can be downloaded as separated ZIP binary. This ZIP file contains Webcam Capture API itself and all required dependencies (in ```libs``` directory). Click on the below link to download it:
 
- [webcam-capture-0.3.10-dist.zip](https://github.com/sarxos/webcam-capture/releases/download/webcam-capture-parent-0.3.10/webcam-capture-0.3.10-dist.zip)
+ [webcam-capture-0.3.12-dist.zip](https://github.com/sarxos/webcam-capture/releases/download/webcam-capture-parent-0.3.12/webcam-capture-0.3.12-dist.zip)
 
-The latest development version JAR (aka SNAPSHOT) can be downloaded [here](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.github.sarxos&a=webcam-capture&v=0.3.11-SNAPSHOT).
+The latest development version JAR (aka SNAPSHOT) can be downloaded [here](https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=com.github.sarxos&a=webcam-capture&v=0.3.13-SNAPSHOT).
 
 ## Contribution
 
-If you have strong will, spare time, knownledge or even some small amount of money you would like to spent for good purpose you can help developing this awesome Webcam Capture API and make it even better! Several kinds of contributions are very welcome:
+If you have strong will, spare time, knowledge or even some small amount of money you would like to spent for good purpose you can help developing this awesome Webcam Capture API and make it even better! Several kinds of contributions are very welcome:
 
 ##### Star Project
 
@@ -125,16 +128,21 @@ Below are the very pretty basic examples demonstrating of how Webcam Capture API
 * [How to display image from webcam in Swing panel (more advanced)](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/WebcamViewerExample.java)
 * [How to listen on camera connection / disconnection events](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/WebcamDiscoveryListenerExample.java)
 * [How to configure capture resolution](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/TakePictureDifferentSizeExample.java)
-* [How to configure non-standard capture resolutionj (e.g. HD720)](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/CustomResolutionExample.java)
+* [How to configure non-standard capture resolution (e.g. HD720)](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/CustomResolutionExample.java)
 * [How to save captured image in PNG / JPG / GIF / BMP etc](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/DifferentFileFormatsExample.java)
 * [How to capture with many parallel threads](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/ConcurrentThreadsExample.java)
 * [How to detect motion (text mode only)](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/DetectMotionExample.java)
+* [How to detect motion with Do-Not-Engage zone](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/DetectMotionDoNotEngageZoneExample.java)
 * [How to perform multipoint motion detection](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/MultipointMotionDetectionExample.java)
 * [How to display images from multiple IP cameras exposing pictures in JPG format](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-drivers/driver-ipcam/src/examples/java/JpegDasdingStudioExample.java)
 * [How to display image from IP camera exposing MJPEG stream](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-drivers/driver-ipcam/src/examples/java/MjpegLignanoBeachExample.java)
 * [How to use composite driver to display both, build-in and IP camera images](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-drivers/driver-ipcam/src/examples/java/DualNativeAndMjpegWebcamExample.java)
 * [How to work with Raspberry Pi (camera module or UVC device)](https://github.com/sarxos/webcam-capture/wiki/How-To-Configure-Raspberry-Pi)
-* [How to rotate the image from camera with ```WebcamImageTransformer```](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/ImageTransformerRotationExample.java)
+* [How to flip (mirror) image displayed in ```WebcamPanel```](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/WebcamPanelFlippingExample.java)
+* [How to rotate image displayed in ```WebcamPanel```](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/WebcamPanelRotationExample.java)
+* [How to rotate image from camera with ```WebcamImageTransformer```](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/ImageTransformerRotationExample.java)
+* [How to use AdaptiveSizeWriter to compress images](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture/src/example/java/AdaptiveSizeWriterExample.java)
+* [How to use Webcam Capture with DroidCam application (smartphone working as IP camera)](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-drivers/driver-ipcam/src/examples/java/DroidCamExample.java)
 
 And here are some more advanced examples, few with quite fancy GUI.
 
@@ -142,14 +150,26 @@ And here are some more advanced examples, few with quite fancy GUI.
 * [How to use ```WebcamMotionDetector``` with the ```JFrame``` window](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-examples/webcam-capture-motiondetector)
 * [How to use webcam capture in Java Applet](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-applet)
 * [How to use ```WebcamPanel.Painter``` interface to draw effects on ```WebcamPanel``` component](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-painter)
-* [How to read QR / DataMatrix and Bar codes](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-qrcode)
+* [How to read QR / DataMatrix and Bar codes (2 examples)](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-qrcode)
 * [How to record video from webcam](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-examples/webcam-capture-video-recording/src/main/java/com/github/sarxos/webcam/Encoder.java)
 * [How to transcode webcam images into live h264 stream](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-live-streaming)
 * [How to use Webcam Capture API in JavaFX](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-javafx)
 * [How to use Webcam Capture API in JavaFX and FXML](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-javafx-fxml)
+* [How to use Webcam Capture API as JavaFX Service and View](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-javafx-service)
 * [How to use Webcam Capture API in SWT](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-swt-awt)
 * [How to use ```WebcamImageTransformer``` to draw effects directly on image from camera](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-transformer)
 * [How to use Webcam Capture API and WebSockets to transport images from server to web client](https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-examples/webcam-capture-websockets)
+* [How to use Webcam Capture API from Akka](https://github.com/sarxos/webcam-capture/blob/master/webcam-capture-examples/webcam-capture-akka/src/main/java/Application.java)
+
+
+## YouTube Tutorials
+
+Video series by [Genuine Coder](https://www.youtube.com/GenuineCoder) for Webcam Capture beginners:
+* [Java Webcam Capture #1: Introduction and Capturing with 3 lines of code](https://www.youtube.com/watch?v=2BHyL_XK8YQ)
+* [Java Webcam Capture #2: Take Images with Different Resolutions](https://www.youtube.com/watch?v=dL4MVWJjVVY)
+* [Java Webcam Capture #3: Video Feed from Webcam using Thread](https://www.youtube.com/watch?v=RkzfFGP60fw)
+* [Java Webcam Capture #4: Video Feed from Webcam (Easy Way)](https://www.youtube.com/watch?v=amMaYzl45Pw)
+
 
 ## Capture Drivers
 
@@ -177,15 +197,19 @@ List of additional capture drivers includes:
 
 [FSWebcam]:   http://www.firestorm.cx/fswebcam/
 [GStreamer]:  http://gstreamer.freedesktop.org/
+[gstreamerj]: https://github.com/gstreamer-java
 [OpenIMAJ]:   http://www.openimaj.org/
 [V4L4j]:      http://code.google.com/p/v4l4j/
 [JMF]:        http://www.oracle.com/technetwork/java/javase/download-142937.html
 [FMJ]:        http://fmj-sf.net/
 [LTI-CIVIL]:  http://lti-civil.org/
-[JavaCV]:     http://code.google.com/p/javacv/
-[VLCj]:       http://code.google.com/p/vlcj/
+[JavaCV]:     https://github.com/bytedeco/javacv/
+[VLC]:        http://www.videolan.org/vlc/
+[VLCj]:       https://github.com/caprica/vlcj
+[V4L]:        https://en.wikipedia.org/wiki/Video4Linux
 [FFmpeg]:     http://www.ffmpeg.org/
-[CLI]:        http://en.wikipedia.org/wiki/Command-line_interface
+[OpenCV]:     http://opencv.org/
+[CLI]:        http://en.wikipedia.org/wiki/Command-line_interface/
 
 [fswebcam]:   https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-fswebcam
 [ipcam]:      https://github.com/sarxos/webcam-capture/tree/master/webcam-capture-drivers/driver-ipcam
@@ -381,9 +405,19 @@ More details on how to use it, how to install, and where necessary binaries can 
 
 ### JavaCV Driver
 
-This is capture driver which uses [JavaCV][] binding for [OpenCV][] to gain access to the UVC camera device.
+This is capture driver which uses [JavaCV][] binding for [OpenCV](https://opencv.org/) to gain access to the UVC camera device.
 
 Maven dependency:
+
+```xml
+<dependency>
+    <groupId>com.github.sarxos</groupId>
+    <artifactId>webcam-capture-driver-opencv</artifactId>
+    <version>{webcam-capture-version-here}</version>
+</dependency>
+```
+
+or if you are using webcam-capture < 0.3.12:
 
 ```xml
 <dependency>
@@ -403,7 +437,7 @@ More details on how to use it, how to install, and where necessary binaries can 
 
 ### FFmpeg CLI Driver
 
-This is capture driver which uses ```ffmpeg``` [CLI][] tool from [FFmpeg][] to access UVC camera device. It works on Linux only.
+This is capture driver which uses ```ffmpeg``` [CLI][] tool from [FFmpeg][] to access UVC camera device.
 
 Maven dependency:
 
@@ -430,7 +464,7 @@ I initially started working on Webcam Capture as a simple proof-of-concept after
 
 ## License
 
-Copyright (C) 2012 - 2015 Bartosz Firyn (https://github.com/sarxos)
+Copyright (C) 2012 - 2017 Bartosz Firyn (https://github.com/sarxos) and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
